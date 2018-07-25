@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:接口的全路径名 -->
+<mapper namespace="com.baidu.mapper.StudentMapper">
+	<select id="listStudent" resultType="com.baidu.entity.Student">
+		select * from d_student 
+		<where>
+			<if test="name!=null and name!=''">
+				and sname like concat('%',#{name},'%')
+			</if>
+			<if test="sdate!=null and sdate!=''">
+				and bir &gt;=#{sdate}
+			</if>
+			<if test="gdate!=null and gdate!=''">
+				and bir &lt;=#{gdate}
+			</if>
+		</where>
+		LIMIT #{page},#{rows}
+	</select>
+	<select id="getcount" resultType="int">
+		select COUNT(*) from d_student
+	</select>
+	<delete id="dellAll">
+		DELETE from d_student where sid in(#{ids})
+	</delete>
+</mapper>
